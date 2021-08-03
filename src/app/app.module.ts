@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
+import { TodoItemComponent } from './todo-item/todo-item.component';
 
 @NgModule({
   imports: [
@@ -14,11 +15,13 @@ import { TodoListComponent } from './todo-list/todo-list.component';
     AppRoutingModule,
     RouterModule.forRoot([
       { path: '', component: TodoListComponent },
+      { path: 'todo/:id', component: TodoItemComponent },
     ])
   ],
   declarations: [
     AppComponent,
-    TodoListComponent
+    TodoListComponent,
+    TodoItemComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,16 +1,19 @@
 <div>
     <h1>Todo App</h1>
 
-    <form action="
-    ">
-        <input type="text">
+    <form action="" (ngSubmit)="newTodo()" [formGroup]="addTodoForm">
+        <input formControlName="task" type="text">
         <button type="submit">Add Todo</button>
     </form>
 
+
+
     <div *ngIf="allTodos.length > 0">
-        <p *ngFor="let todo of allTodos">
-            {{ todo }}
-        </p>
+        <div *ngFor="let todo of allTodos; index as i;">
+            <input [checked]='todo.done' type="checkbox" (click)="done(todo, i)">
+            <p [routerLink]="['/todo', i]" [ngClass]="{done: todo.done}" >{{ todo.name }}</p>
+            <button (click)='deleteTodo(todo, i)'>Delete</button>
+        </div>
     </div>
     
 </div>
