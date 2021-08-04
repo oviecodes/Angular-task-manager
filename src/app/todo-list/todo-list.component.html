@@ -1,18 +1,25 @@
-<div>
-    <h1>Todo App</h1>
 
-    <form action="" (ngSubmit)="newTodo()" [formGroup]="addTodoForm">
-        <input formControlName="task" type="text">
-        <button type="submit">Add Todo</button>
-    </form>
 
+
+<div class="showcase">
+    <h1 class="header">Todo App</h1>
+
+    <div class="form-container">
+        <form (ngSubmit)="newTodo()" [formGroup]="addTodoForm">
+            <input placeholder="Enter new Project" formControlName="task" type="text">
+            <!-- <button type="submit">Add Todo</button> -->
+        </form>
+    </div>
+    
 
 
     <div *ngIf="allTodos.length > 0">
-        <div *ngFor="let todo of allTodos; index as i;">
-            <input [checked]='todo.done' type="checkbox" (click)="done(todo, i)">
-            <p [routerLink]="['/todo', i]" [ngClass]="{done: todo.done}" >{{ todo.name }}</p>
-            <button (click)='deleteTodo(todo, i)'>Delete</button>
+        <div *ngFor="let todo of allTodos; index as i;" class="todo-item">
+            <div class="check-text">
+                <input [checked]='todo.done' type="checkbox" (click)="done(todo, i)">
+                <p [routerLink]="['/todo', i]" [ngClass]="{done: todo.done}">{{ todo.name }}</p>
+            </div>
+            <button (click)='deleteTodo(todo, i)' class="button">Delete</button>
         </div>
     </div>
     

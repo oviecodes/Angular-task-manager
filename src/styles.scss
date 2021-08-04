@@ -1,1 +1,93 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    font-family: montserrat;
+}
+
+.header {
+    text-align: center;
+    cursor: pointer;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5em;
+    background-color: rgb(255, 182, 93);
+    margin: 1em auto;
+    border-radius: 20px;
+    width: 50%;
+
+    .check-text {
+        display: flex;
+        align-items: center;
+        font-size: 1.2em;
+        cursor: pointer;
+
+        input {
+            margin-right: 1em;
+            border: none !important;
+            box-shadow: 2px 0px 10px 0px burlywood;
+        }
+
+        p {
+            color: white;
+        }
+    }
+
+    .button {
+        font-family: montserrat;
+        height: 100%;
+        padding: 1.5em;
+        border: none !important;
+        background-color: rgb(177, 137, 85);
+        border-radius: 20px;
+        color: white;
+        font-size: 0.8em;
+        cursor: pointer;
+    }
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+
+.form-container {
+    text-align: center;
+
+    input {
+        padding: 1.2em;
+        width: 50%;
+        border-radius: 20px;
+        outline: none !important;
+        font-family: montserrat;
+    }
+}
+
+.showcase {
+    width: 50%;
+    margin: 0 auto;
+}
+
+
+@media only screen and (max-width: 950px) {
+  .showcase {
+      width: 80%
+  }
+
+  .todo-item {
+      width: 80%;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .showcase {
+      width: 100%
+  }
+
+  .todo-item {
+      width: 90%;
+  }
+}

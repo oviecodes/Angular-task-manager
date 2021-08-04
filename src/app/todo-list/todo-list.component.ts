@@ -1,4 +1,7 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+
+
+
+import { Component, OnInit} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Todo } from '../todo'
 
@@ -34,7 +37,7 @@ export class TodoListComponent implements OnInit {
     const todo: Todo = {
       name: this.addTodoForm.value.task,
       done: false,
-      tasks: ['get money', 'code more']
+      tasks: []
     }
     this.allTodos.unshift(todo)
     this.persistTodo(this.allTodos)

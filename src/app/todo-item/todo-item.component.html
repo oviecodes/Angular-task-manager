@@ -1,5 +1,24 @@
 
 
 
-<p>{{ todo.name }}</p>
+<div class="showcase">
+    <h2 [routerLink]="['/']" class="header">{{ todo.name }}</h2>
+
+    <div class="form-container">
+        <form (ngSubmit)='newItem()'  [formGroup]="addNewItem">
+            <input placeholder="Enter new Todo Item" type="text" formControlName="item">
+            <!-- <button type="submit">Add Item</button> -->
+        </form>
+    </div>
+
+
+    <div class="">
+        <div *ngFor="let item of tasks; index as i" class="todo-item">
+            <div class="check-text">
+                <input type="checkbox" (click)="done(item, i)" [checked]="item.completed">
+                <p [ngClass]="{ done: item.completed }">{{ item.task }}</p>
+            </div>
+        </div>
+    </div>
+</div>
 
