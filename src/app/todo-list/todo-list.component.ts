@@ -17,6 +17,10 @@ export class TodoListComponent implements OnInit {
 
   allTodos: Array<Todo> = []
 
+  complete: Array<Todo> = []
+
+  incomplete: Array<Todo> = []
+
   constructor(private formBuilder: FormBuilder) { }
 
   addTodoForm = this.formBuilder.group({
@@ -27,9 +31,10 @@ export class TodoListComponent implements OnInit {
     todo.done = !todo.done
     //move todo to end if done and if undone move to top
     this.allTodos.splice(i, 1)
+    this.reAssignTodos()
     todo.done  === true ?
-      this.allTodos.push(todo) :
-      this.allTodos.unshift(todo)
+      this.complete.push(todo) :
+      this.incomplete.push(todo)
     this.persistTodo(this.allTodos)
   }
 
@@ -40,12 +45,14 @@ export class TodoListComponent implements OnInit {
       tasks: []
     }
     this.allTodos.unshift(todo)
+    this.reAssignTodos()
     this.persistTodo(this.allTodos)
     this.addTodoForm.reset()
   }
 
   deleteTodo(todo: any, i: any) {
     this.allTodos.splice(i, 1)
+    this.reAssignTodos()
     this.persistTodo(this.allTodos)
   }
 
@@ -57,8 +64,14 @@ export class TodoListComponent implements OnInit {
     this.allTodos = JSON.parse(window.localStorage.getItem('todo')!) || []
   }
 
+  reAssignTodos() {
+    this.complete = this.allTodos.filter((el:any) => el.done === true)
+    this.incomplete = this.allTodos.filter((el:any) => el.done === true)
+  }
+
   ngOnInit(): void {
     this.getAllTodos()
+    this.reAssignTodos()
     console.log(this.allTodos)
   }
 

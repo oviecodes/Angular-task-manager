@@ -18,6 +18,7 @@ body {
     margin: 1em auto;
     border-radius: 20px;
     width: 50%;
+    transition: width  linear .5s;
 
     .check-text {
         display: flex;
@@ -72,6 +73,15 @@ body {
 }
 
 
+//animations
+
+.todo-item:hover {
+    width: 55%
+}
+
+
+
+//media queries
 @media only screen and (max-width: 950px) {
   .showcase {
       width: 80%
