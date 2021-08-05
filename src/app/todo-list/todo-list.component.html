@@ -21,7 +21,7 @@
             </div>
             <button (click)='deleteTodo(todo, todo.id)' class="button">Delete</button>
         </div>
-        <p *ngIf="complete.length > 0">
+        <p class="complete_head" *ngIf="complete.length > 0">
             Completed
         </p>
         <div *ngFor="let todo of complete; index as i;" class="todo-item">

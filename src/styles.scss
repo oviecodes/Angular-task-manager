@@ -9,6 +9,12 @@ body {
     cursor: pointer;
 }
 
+.complete_head {
+    padding: 0.5em;
+    width: 50%;
+    margin: 1em auto;
+}
+
 .todo-item {
     display: flex;
     align-items: center;

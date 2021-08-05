@@ -27,16 +27,29 @@ export class TodoItemComponent implements OnInit {
   ngOnInit(): void {
     const param = this.route.snapshot.paramMap;
 
-    this.tasks = this.allTodo[Number(param.get('id'))].tasks!
     this.todo = this.allTodo[Number(param.get('id'))]!
+    this.tasks = this.allTodo[Number(param.get('id'))].tasks!
+    this.checkDone()
+    this.updtateDone()
+    this.persistTasks()
   }
 
+
+  checkDone() {
+    this.todo.done === true ?
+      this.tasks.forEach(el => el.completed = true) : null
+  }
+
+  updtateDone() {
+    this.tasks.filter(el => el.completed === true).length === this.tasks.length ?
+      this.todo.done = true : null
+  }
 
 
   newItem() {
     const newTodo = {
       task: this.addNewItem.value.item,
-      done: false
+      completed: false
     }
 
     this.tasks.unshift(newTodo)
@@ -55,6 +68,7 @@ export class TodoItemComponent implements OnInit {
       this.tasks.unshift(todo)
 
     this.todo.tasks = this.tasks
+    this.updtateDone()
     this.persistTasks()
   }
 
