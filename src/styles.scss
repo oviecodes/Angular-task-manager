@@ -90,20 +90,28 @@ body {
 //media queries
 @media only screen and (max-width: 950px) {
   .showcase {
-      width: 80%
+    width: 80%
   }
 
   .todo-item {
-      width: 80%;
+    width: 80%;
+  }
+
+  .complete_head {
+    width: 80%;
   }
 }
 
 @media only screen and (max-width: 450px) {
   .showcase {
-      width: 100%
+    width: 100%
   }
 
   .todo-item {
-      width: 90%;
+    width: 90%;
+  }
+
+  .complete_head {
+    width: 90%;
   }
 }
