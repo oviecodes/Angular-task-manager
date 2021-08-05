@@ -4,6 +4,7 @@
 import { Component, OnInit} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Todo } from '../todo'
+// import { v4 as uuidv4 } from 'uuid';
 
 
 @Component({
@@ -27,14 +28,11 @@ export class TodoListComponent implements OnInit {
     task: ''
   });
 
-  done(todo: any, i: any) {
+  done(todo: any, id: any) {
     todo.done = !todo.done
     //move todo to end if done and if undone move to top
-    this.allTodos.splice(i, 1)
+    // this.allTodos.splice(this.allTodos.findIndex(el => el.id === id), 1)
     this.reAssignTodos()
-    todo.done  === true ?
-      this.complete.push(todo) :
-      this.incomplete.push(todo)
     this.persistTodo(this.allTodos)
   }
 
@@ -42,6 +40,7 @@ export class TodoListComponent implements OnInit {
     const todo: Todo = {
       name: this.addTodoForm.value.task,
       done: false,
+      id: String(Date.now().toString() + (Math.random() * 120).toString(32)),
       tasks: []
     }
     this.allTodos.unshift(todo)
@@ -50,8 +49,8 @@ export class TodoListComponent implements OnInit {
     this.addTodoForm.reset()
   }
 
-  deleteTodo(todo: any, i: any) {
-    this.allTodos.splice(i, 1)
+  deleteTodo(todo: any, id: any) {
+    this.allTodos.splice(this.allTodos.findIndex(el => el.id === id), 1)
     this.reAssignTodos()
     this.persistTodo(this.allTodos)
   }
@@ -66,7 +65,7 @@ export class TodoListComponent implements OnInit {
 
   reAssignTodos() {
     this.complete = this.allTodos.filter((el:any) => el.done === true)
-    this.incomplete = this.allTodos.filter((el:any) => el.done === true)
+    this.incomplete = this.allTodos.filter((el:any) => el.done === false)
   }
 
   ngOnInit(): void {

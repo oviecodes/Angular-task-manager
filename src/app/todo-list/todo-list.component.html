@@ -14,12 +14,22 @@
 
 
     <div *ngIf="allTodos.length > 0">
-        <div *ngFor="let todo of allTodos; index as i;" class="todo-item">
+        <div *ngFor="let todo of incomplete; index as i;" class="todo-item">
             <div class="check-text">
-                <input [checked]='todo.done' type="checkbox" (click)="done(todo, i)">
+                <input [checked]='todo.done' type="checkbox" (click)="done(todo, todo.id)">
                 <p [routerLink]="['/todo', i]" [ngClass]="{done: todo.done}">{{ todo.name }}</p>
             </div>
-            <button (click)='deleteTodo(todo, i)' class="button">Delete</button>
+            <button (click)='deleteTodo(todo, todo.id)' class="button">Delete</button>
+        </div>
+        <p *ngIf="complete.length > 0">
+            Completed
+        </p>
+        <div *ngFor="let todo of complete; index as i;" class="todo-item">
+            <div class="check-text">
+                <input [checked]='todo.done' type="checkbox" (click)="done(todo, todo.id)">
+                <p [routerLink]="['/todo', i]" [ngClass]="{done: todo.done}">{{ todo.name }}</p>
+            </div>
+            <button (click)='deleteTodo(todo, todo.id)' class="button">Delete</button>
         </div>
     </div>
     
