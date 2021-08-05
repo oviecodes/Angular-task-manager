@@ -42,7 +42,7 @@ export class TodoItemComponent implements OnInit {
 
   updtateDone() {
     this.tasks.filter(el => el.completed === true).length === this.tasks.length ?
-      this.todo.done = true : null
+      this.todo.done = true : this.todo.done = false
   }
 
 
