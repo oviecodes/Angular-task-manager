@@ -4,8 +4,6 @@
 import { Component, OnInit} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Todo } from '../todo'
-// import { v4 as uuidv4 } from 'uuid';
-
 
 @Component({
   selector: 'app-todo-list',
@@ -30,8 +28,6 @@ export class TodoListComponent implements OnInit {
 
   done(todo: any, id: any) {
     todo.done = !todo.done
-    //move todo to end if done and if undone move to top
-    // this.allTodos.splice(this.allTodos.findIndex(el => el.id === id), 1)
     this.reAssignTodos()
     this.persistTodo(this.allTodos)
   }
