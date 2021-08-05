@@ -67,7 +67,6 @@ export class TodoListComponent implements OnInit {
   ngOnInit(): void {
     this.getAllTodos()
     this.reAssignTodos()
-    console.log(this.allTodos)
   }
 
 }
