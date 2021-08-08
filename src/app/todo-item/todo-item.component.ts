@@ -60,11 +60,11 @@ export class TodoItemComponent implements OnInit {
   }
 
   done(todo: any, id: any) {
-    todo.completed = !todo.completed
+    todo.done = !todo.done
 
     this.tasks.splice(id, 1)
 
-    todo.completed === true ?
+    todo.done === true ?
       this.tasks.push(todo) :
       this.tasks.unshift(todo)
 
