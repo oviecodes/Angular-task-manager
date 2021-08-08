@@ -3,6 +3,6 @@
 export interface Todo {
     name: string
     done: boolean
-    id: string
+    _id: string
     tasks: Array<string>
 }

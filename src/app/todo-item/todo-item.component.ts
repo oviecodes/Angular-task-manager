@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { Todo } from '../todo'
+import { TodoService } from '../todo.service'
 
 @Component({
   selector: 'app-todo-item',
@@ -10,71 +11,70 @@ import { Todo } from '../todo'
   styleUrls: ['./todo-item.component.scss']
 })
 export class TodoItemComponent implements OnInit {
-  todo!: Todo
+  todo:any = []
 
-  tasks:any[] = []
+  tasks:any = []
 
-  allTodo = JSON.parse(window.localStorage.getItem('todo')!)
+  // allTodo = {}
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder) { }
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private todoService: TodoService) { }
 
   addNewItem = this.formBuilder.group({
     item: ''
   })
 
-  param = Number(this.route.snapshot.paramMap.get('id'));
+  param = this.route.snapshot.paramMap.get('id');
 
-  ngOnInit(): void {
-    const param = this.route.snapshot.paramMap;
-
-    this.todo = this.allTodo[Number(param.get('id'))]!
-    this.tasks = this.allTodo[Number(param.get('id'))].tasks!
-    this.checkDone()
-    this.updtateDone()
-    this.persistTasks()
+  ngOnInit(): void {    
+    this.todoService.getTask(this.param).subscribe((data: any) => {
+      this.todo = data
+      this.tasks = data.todos
+      this.checkDone()
+      this.updtateDone()
+      this.persistTasks()
+    })
   }
 
 
   checkDone() {
     this.todo.done === true ?
-      this.tasks.forEach(el => el.completed = true) : null
+      this.tasks.forEach((el: any) => el.completed = true) : null
   }
 
   updtateDone() {
-    this.tasks.filter(el => el.completed === true).length === this.tasks.length ?
+    this.tasks.filter((el: any) => el.completed === true).length === this.tasks.length ?
       this.todo.done = true : this.todo.done = false
   }
 
 
   newItem() {
     const newTodo = {
-      task: this.addNewItem.value.item,
-      completed: false
+      title: this.addNewItem.value.item,
+      done: false
     }
 
     this.tasks.unshift(newTodo)
     this.addNewItem.reset()
-    this.todo.tasks = this.tasks
+    this.todo.todos = this.tasks
     this.persistTasks()
   }
 
-  done(todo: any, i: number) {
+  done(todo: any, id: any) {
     todo.completed = !todo.completed
 
-    this.tasks.splice(i, 1)
+    this.tasks.splice(id, 1)
 
     todo.completed === true ?
       this.tasks.push(todo) :
       this.tasks.unshift(todo)
 
-    this.todo.tasks = this.tasks
+    this.todo.todos = this.tasks
     this.updtateDone()
     this.persistTasks()
   }
 
   persistTasks() {
-    this.allTodo[this.param].tasks = this.todo.tasks
-    window.localStorage.setItem('todo', JSON.stringify(this.allTodo))
+    this.todoService.updateTask(this.param, this.todo).subscribe(data => this.todo = data)
   }
 
 }

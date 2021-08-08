@@ -4,6 +4,7 @@
 import { Component, OnInit} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Todo } from '../todo'
+import { TodoService } from '../todo.service'
 
 @Component({
   selector: 'app-todo-list',
@@ -14,13 +15,15 @@ import { Todo } from '../todo'
   
 export class TodoListComponent implements OnInit {
 
-  allTodos: Array<Todo> = []
+  allTodos:any = []
+
+  tasks:any = []
 
   complete: Array<Todo> = []
 
   incomplete: Array<Todo> = []
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private todoService: TodoService) { }
 
   addTodoForm = this.formBuilder.group({
     task: ''
@@ -28,17 +31,16 @@ export class TodoListComponent implements OnInit {
 
   done(todo: any, id: any) {
     todo.done = !todo.done
-    this.reAssignTodos()
-    this.persistTodo(this.allTodos)
+    // this.reAssignTodos()
+    // this.persistTodo(this.allTodos)
+    console.log(this.allTodos)
   }
 
   newTodo() {
-    const todo: Todo = {
+    const todo = {
       name: this.addTodoForm.value.task,
-      done: false,
-      id: String(Date.now().toString() + (Math.random() * 120).toString(32)),
-      tasks: []
     }
+    console.log(this.allTodos)
     this.allTodos.unshift(todo)
     this.reAssignTodos()
     this.persistTodo(this.allTodos)
@@ -46,7 +48,7 @@ export class TodoListComponent implements OnInit {
   }
 
   deleteTodo(todo: any, id: any) {
-    this.allTodos.splice(this.allTodos.findIndex(el => el.id === id), 1)
+    this.allTodos.splice(this.allTodos.findIndex((el: any) => el.id === id), 1)
     this.reAssignTodos()
     this.persistTodo(this.allTodos)
   }
@@ -55,9 +57,7 @@ export class TodoListComponent implements OnInit {
     window.localStorage.setItem('todo', JSON.stringify(allTodos))
   }
 
-  getAllTodos() {
-    this.allTodos = JSON.parse(window.localStorage.getItem('todo')!) || []
-  }
+
 
   reAssignTodos() {
     this.complete = this.allTodos.filter((el:any) => el.done === true)
@@ -65,8 +65,13 @@ export class TodoListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllTodos()
-    this.reAssignTodos()
+   
+    this.todoService.getAllTasks().subscribe(
+      (data: any) => {
+        this.allTodos = data
+        this.reAssignTodos()
+      })
+    
   }
 
 }

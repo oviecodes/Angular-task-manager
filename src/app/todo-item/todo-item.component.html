@@ -14,8 +14,8 @@
     <div class="">
         <div *ngFor="let item of tasks; index as i" class="todo-item">
             <div class="check-text">
-                <input type="checkbox" (click)="done(item, i)" [checked]="item.completed">
-                <p [ngClass]="{ done: item.completed }">{{ item.task }}</p>
+                <input type="checkbox" (click)="done(item, i)" [checked]="item.done">
+                <p [ngClass]="{ done: item.done }">{{ item.title }}</p>
             </div>
         </div>
     </div>
