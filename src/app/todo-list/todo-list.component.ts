@@ -17,7 +17,7 @@ export class TodoListComponent implements OnInit {
 
   allTodos:any = []
 
-  tasks:any = []
+  msg:string = ''
 
   complete: Array<Todo> = []
 
@@ -31,33 +31,37 @@ export class TodoListComponent implements OnInit {
 
   done(todo: any, id: any) {
     todo.done = !todo.done
-    // this.reAssignTodos()
-    // this.persistTodo(this.allTodos)
-    console.log(this.allTodos)
+    this.todoService.updateTask(id, todo).subscribe(data => todo = data)
+    this.reAssignTodos()
   }
 
   newTodo() {
-    const todo = {
+    let todo = {
       name: this.addTodoForm.value.task,
+      todos: [],
+      done: false
     }
-    console.log(this.allTodos)
-    this.allTodos.unshift(todo)
-    this.reAssignTodos()
-    this.persistTodo(this.allTodos)
+    
+    this.todoService.createTask({ name: this.addTodoForm.value.task })
+      .subscribe((data: any) => {
+        todo = data
+        this.allTodos.unshift(todo)
+        this.reAssignTodos()
+      })
+   
     this.addTodoForm.reset()
   }
 
   deleteTodo(todo: any, id: any) {
-    this.allTodos.splice(this.allTodos.findIndex((el: any) => el.id === id), 1)
+
+    this.allTodos.splice(this.allTodos.findIndex((el: any) => el._id === id), 1)
     this.reAssignTodos()
-    this.persistTodo(this.allTodos)
+    this.todoService.deleteTask(id).subscribe((data: any) => {
+      this.msg = data.msg
+      
+    })
+   
   }
-
-  persistTodo(allTodos: any) {
-    window.localStorage.setItem('todo', JSON.stringify(allTodos))
-  }
-
-
 
   reAssignTodos() {
     this.complete = this.allTodos.filter((el:any) => el.done === true)

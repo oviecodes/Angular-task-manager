@@ -42,8 +42,8 @@ export class TodoItemComponent implements OnInit {
 
   //this checks if all the child tasks are done then updates the parent task accordingly
   updateDone() {
-    this.tasks.filter((el: any) => el.done === true).length === this.tasks.length ?
-      this.todo.done = true : this.todo.done = false
+    this.tasks.length > 0 ? this.tasks.filter((el: any) => el.done === true).length === this.tasks.length ?
+      this.todo.done = true : this.todo.done = false : null
   }
 
 
