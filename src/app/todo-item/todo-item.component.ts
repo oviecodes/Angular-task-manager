@@ -15,8 +15,6 @@ export class TodoItemComponent implements OnInit {
 
   tasks:any = []
 
-  // allTodo = {}
-
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private todoService: TodoService) { }
 
   addNewItem = this.formBuilder.group({
@@ -30,19 +28,21 @@ export class TodoItemComponent implements OnInit {
       this.todo = data
       this.tasks = data.todos
       this.checkDone()
-      this.updtateDone()
+      this.updateDone()
       this.persistTasks()
     })
   }
 
 
+  //this checks if the todo(parent task) is done and update the child task accordingly
   checkDone() {
     this.todo.done === true ?
-      this.tasks.forEach((el: any) => el.completed = true) : null
+      this.tasks.forEach((el: any) => el.done = true) : null
   }
 
-  updtateDone() {
-    this.tasks.filter((el: any) => el.completed === true).length === this.tasks.length ?
+  //this checks if all the child tasks are done then updates the parent task accordingly
+  updateDone() {
+    this.tasks.filter((el: any) => el.done === true).length === this.tasks.length ?
       this.todo.done = true : this.todo.done = false
   }
 
@@ -69,9 +69,10 @@ export class TodoItemComponent implements OnInit {
       this.tasks.unshift(todo)
 
     this.todo.todos = this.tasks
-    this.updtateDone()
+    this.updateDone()
     this.persistTasks()
   }
+
 
   persistTasks() {
     this.todoService.updateTask(this.param, this.todo).subscribe(data => this.todo = data)
